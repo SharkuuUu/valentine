@@ -63,6 +63,7 @@
         "I'll cook you a dish", 
         "PLEASEEE PREEETTTYYY LEANNEE"
     ];
+    let secondQuestion = false;
 
     function tryAgain() {
         attempts++;
@@ -77,15 +78,18 @@
         noButton.onclick = valentineReject;
         attempts = 0; // Reset attempts when transitioning
         noButton.innerText = "No";
+        secondQuestion = true;
     }
 
     function valentineReject() {
-        attempts++;
-        if (attempts >= noTexts.length) {
-            document.body.innerHTML = "<h1>Goodbye 😢</h1>";
-        } else {
-            noButton.innerText = noTexts[attempts];
-            yesButton.style.transform = `scale(${1 + attempts * 0.1})`;  // Makes "Yes" button bigger
+        if (secondQuestion) {
+            attempts++;
+            if (attempts >= noTexts.length) {
+                document.body.innerHTML = "<h1>Goodbye 😢</h1>";
+            } else {
+                noButton.innerText = noTexts[attempts - 1];
+                yesButton.style.transform = `scale(${1 + attempts * 0.1})`;  // Makes "Yes" button bigger
+            }
         }
     }
 
