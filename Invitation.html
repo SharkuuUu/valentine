@@ -40,6 +40,35 @@
             font-weight: bold;
             margin-top: 20px;
         }
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            transform: rotate(-45deg);
+            animation: float 4s linear infinite;
+        }
+        .heart:before, .heart:after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+        }
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+        .heart:after {
+            top: 0;
+            left: 10px;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(-45deg); opacity: 1; }
+            50% { transform: translateY(-100px) rotate(-45deg); opacity: 0.7; }
+            100% { transform: translateY(-200px) rotate(-45deg); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -67,6 +96,9 @@
 
     function tryAgain() {
         attempts++;
+        if (attempts === 1) {
+            questionText.innerText = "Are you sure? 🥺";
+        }
         if (attempts >= 15) {
             document.body.innerHTML = "<h1>Goodbye 😢</h1>";
         }
@@ -99,6 +131,25 @@
         yesButton.style.display = "none";
         noButton.style.display = "none";
         questionText.innerText = "See you soon! ❤️";
+        createFloatingHearts();
+    }
+
+    function createFloatingHearts() {
+        for (let i = 0; i < 15; i++) {
+            let heart = document.createElement("div");
+            heart.className = "heart";
+            heart.style.left = Math.random() * window.innerWidth + "px";
+            heart.style.top = window.innerHeight + "px"; // Start from the bottom
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.style.transition = "transform 3s ease-in-out, opacity 3s";
+                heart.style.transform = `translateY(-${window.innerHeight}px)`;
+                heart.style.opacity = "0";
+            }, 100);
+
+            setTimeout(() => heart.remove(), 4000);
+        }
     }
 </script>
 </body>
