@@ -40,35 +40,6 @@
             font-weight: bold;
             margin-top: 20px;
         }
-        .heart {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: red;
-            transform: rotate(-45deg);
-            animation: float 4s linear infinite;
-        }
-        .heart:before, .heart:after {
-            content: "";
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: red;
-            border-radius: 50%;
-        }
-        .heart:before {
-            top: -10px;
-            left: 0;
-        }
-        .heart:after {
-            top: 0;
-            left: 10px;
-        }
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(-45deg); opacity: 1; }
-            50% { transform: translateY(-100px) rotate(-45deg); opacity: 0.7; }
-            100% { transform: translateY(-200px) rotate(-45deg); opacity: 0; }
-        }
     </style>
 </head>
 <body>
@@ -82,59 +53,41 @@
 <script>
     let attempts = 0;
     let yesButton = document.getElementById("yes-btn");
+    let noButton = document.getElementById("no-btn");
     let questionText = document.getElementById("question");
+    let noTexts = [
+        "Are you sure", 
+        "Pretty Please", 
+        "I'll give you 3L of ICE CREAMMM", 
+        "You want Cheesecake", 
+        "I'll cook you a dish", 
+        "PLEASEEE PREEETTTYYY LEANNEE"
+    ];
 
     function tryAgain() {
         attempts++;
-        if (attempts >= 15) {
+        if (attempts >= noTexts.length) {
             document.body.innerHTML = "<h1>Goodbye 😢</h1>";
         } else {
-            questionText.innerText = "Are you sure? 🥺";
+            noButton.innerText = noTexts[attempts];
             yesButton.style.transform = `scale(${1 + attempts * 0.1})`;  // Makes "Yes" button bigger
         }
     }
 
     function askValentine() {
         questionText.innerText = "Will you be my Valentine in Minecraft? :3";
-        document.getElementById("yes-btn").onclick = confirmDate;
-        document.getElementById("no-btn").onclick = valentineReject;
-    }
-
-    function valentineReject() {
-        attempts++;
-        if (attempts >= 15) {
-            document.body.innerHTML = "<h1>Goodbye 😢</h1>";
-        } else {
-            questionText.innerText = "Pretty please? 🥺🥺🥺";
-            yesButton.style.transform = `scale(${1 + attempts * 0.1})`;  // Makes "Yes" button bigger
-        }
+        yesButton.onclick = confirmDate;
+        noButton.onclick = tryAgain;
+        attempts = 0; // Reset attempts when transitioning
+        noButton.innerText = "No";
     }
 
     function confirmDate() {
         alert("Let's meet in Minecraft at exactly 11 PM, February 14 (PH TIME) ❤️");
         document.getElementById("hidden-message").style.display = "block";
-        document.getElementById("yes-btn").style.display = "none";
-        document.getElementById("no-btn").style.display = "none";
+        yesButton.style.display = "none";
+        noButton.style.display = "none";
         questionText.innerText = "See you soon! ❤️";
-        createFloatingHearts(); // Show floating hearts like a turtle heart
-    }
-
-    function createFloatingHearts() {
-        for (let i = 0; i < 15; i++) {
-            let heart = document.createElement("div");
-            heart.className = "heart";
-            heart.style.left = Math.random() * window.innerWidth + "px";
-            heart.style.top = window.innerHeight + "px"; // Start from the bottom
-            document.body.appendChild(heart);
-
-            setTimeout(() => {
-                heart.style.transition = "transform 3s ease-in-out, opacity 3s";
-                heart.style.transform = `translateY(-${window.innerHeight}px)`;
-                heart.style.opacity = "0";
-            }, 100);
-
-            setTimeout(() => heart.remove(), 4000);
-        }
     }
 </script>
 </body>
