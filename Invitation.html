@@ -127,16 +127,16 @@ function goodbyeMessage() {
     }
 
     function valentineReject() {
-        if (secondQuestion) {
-            attempts++;
-            if (attempts >= 15) {
-                document.body.innerHTML = "<h1>Goodbye 😢</h1>";
-            } else {
-                noButton.innerText = shuffledNoTexts[attempts % shuffledNoTexts.length];
-                yesButton.style.transform = `scale(${1 + attempts * 0.1})`;  // Yes button gets bigger
-            }
+    if (secondQuestion) {
+        attempts++;
+        if (attempts >= noTexts.length) {
+            document.body.innerHTML = "<h1>Goodbye 😢</h1>";
+        } else {
+            noButton.innerText = noTexts[attempts - 1];
+            yesButton.style.transform = `scale(${1 + attempts * 0.2})`;  // YES button grows bigger faster!
         }
     }
+}
 
     function confirmDate() {
         alert("Let's meet in Minecraft at exactly 11 PM, February 14 (PH TIME) ❤️");
