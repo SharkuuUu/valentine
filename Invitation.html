@@ -84,31 +84,44 @@
     let yesButton = document.getElementById("yes-btn");
     let noButton = document.getElementById("no-btn");
     let questionText = document.getElementById("question");
-    let noTexts = [
-        "Are you sure", 
-        "Pretty Please", 
-        "I'll give you 3L of ICE CREAMMM", 
-        "You want Cheesecake", 
-        "I'll cook you a dish", 
-        "PLEASEEE PREEETTTYYY LEANNEE"
-    ];
     let secondQuestion = false;
-
-    function tryAgain() {
-        attempts++;
-        if (attempts === 1) {
-            questionText.innerText = "Are you sure? 🥺";
-        }
-        if (attempts >= 15) {
-            document.body.innerHTML = "<h1>Goodbye 😢</h1>";
-        }
+    
+    let noTexts = [
+        "Are you sure? 🥺", 
+        "Pretty Please? 🥺👉👈", 
+        "I'll give you 3L of ICE CREAMMM 🍨", 
+        "You want Cheesecake? 🍰", 
+        "I'll cook you a dish! 🍳", 
+        "PLEASEEE PREEETTTYYY LEANNEE 😭"
+    ];
+    
+    function shuffleArray(array) {
+        return array.sort(() => Math.random() - 0.5);
     }
+    
+    let shuffledNoTexts = shuffleArray([...noTexts]); // Shuffle at the start
+    
+    function tryAgain() {
+    attempts++;
+    if (attempts === 1) {
+        questionText.innerText = "Are you sure? 🥺";
+        yesButton.onclick = goodbyeMessage; // If she says YES, show "goodbye"
+        noButton.onclick = askValentine; // If she says NO, ask "Will you be my Valentine?"
+    }
+    if (attempts >= 15) {
+        document.body.innerHTML = "<h1>Goodbye 😢</h1>";
+    }
+}
+
+function goodbyeMessage() {
+    document.body.innerHTML = "<h1>ohh okeii goodbye:((" + " 😢</h1>";
+}
 
     function askValentine() {
         questionText.innerText = "Will you be my Valentine in Minecraft? :3";
         yesButton.onclick = confirmDate;
         noButton.onclick = valentineReject;
-        attempts = 0; // Reset attempts when transitioning
+        attempts = 0; // Reset attempts
         noButton.innerText = "No";
         secondQuestion = true;
     }
@@ -116,11 +129,11 @@
     function valentineReject() {
         if (secondQuestion) {
             attempts++;
-            if (attempts >= noTexts.length) {
+            if (attempts >= 15) {
                 document.body.innerHTML = "<h1>Goodbye 😢</h1>";
             } else {
-                noButton.innerText = noTexts[attempts - 1];
-                yesButton.style.transform = `scale(${1 + attempts * 0.1})`;  // Makes "Yes" button bigger
+                noButton.innerText = shuffledNoTexts[attempts % shuffledNoTexts.length];
+                yesButton.style.transform = `scale(${1 + attempts * 0.1})`;  // Yes button gets bigger
             }
         }
     }
