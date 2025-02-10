@@ -139,13 +139,14 @@ function goodbyeMessage() {
 }
 
     function confirmDate() {
-        alert("Let's meet in Minecraft any time you're available on February 14. ❤️");
-        document.getElementById("hidden-message").style.display = "block";
-        yesButton.style.display = "none";
-        noButton.style.display = "none";
-        questionText.innerText = "See you soon! ❤️";
-        createFloatingHearts();
-    }
+    alert("Let's meet in Minecraft any time you're available on February 14. ❤️");
+    document.getElementById("hidden-message").innerText = "Let's meet in Minecraft any time you're available on February 14. ❤️";
+    document.getElementById("hidden-message").style.display = "block";
+    yesButton.style.display = "none";
+    noButton.style.display = "none";
+    questionText.innerText = "See you soon! ❤️";
+    createFloatingHearts();
+}
 
     function createFloatingHearts() {
         for (let i = 0; i < 15; i++) {
